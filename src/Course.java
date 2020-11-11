@@ -19,8 +19,8 @@ public class Course {
 		return name;
 	}
 	
-	public int getGrade() {
-		return grade;
+	public double getGrade() {
+		return (double) grade;
 	}
 	
 	public double getCredits() {
