@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -31,12 +30,12 @@ public class Main {
 					courses = new CourseScraper().getCourses(selectedFile);
 					if (courses.size() == 0) {
 						JOptionPane.showMessageDialog(null, "Kunde inte läsa filen :( Valde du verkligen rätt resultatintyg?");
-						throw new Error("Wrong file!");
+						return;
 					}
 					student = new Student(courses);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Kunde inte läsa filen :( Valde du verkligen rätt resultatintyg?");
-					throw new Error("Could not read file!", e);
+					return;
 				}
 			} else {
 				return;
