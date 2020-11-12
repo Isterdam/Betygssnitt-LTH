@@ -24,9 +24,11 @@ public class CourseScraper {
 		}
 		
 		for (String row : rows) {
-			Course course = getCourse(row);
-			if (!course.getCode().equals("not a course")) {
+			try {
+				Course course = getCourse(row);
 				courses.add(course);
+			} catch (IllegalArgumentException e) {
+				// not a valid course
 			}
 		}
 		
@@ -43,7 +45,7 @@ public class CourseScraper {
 		return content;
 	}
 
-	private Course getCourse(String row) {
+	private Course getCourse(String row) throws IllegalArgumentException {
 		Pattern coursePattern = Pattern.compile("^([A-Z]{4}[0-9]{2})");
 		Matcher matcher = coursePattern.matcher(row);
 		
@@ -51,19 +53,26 @@ public class CourseScraper {
 			String[] components = row.split("\\s+"); // split at spaces
 			
 			if (components.length < 3 || components.length > 4) {
-				return new Course("not a course", "", -1, -1.0); 
+				throw new IllegalArgumentException("Row was not a valid course!");
 			}
 			
 			String code = components[0];
+			
+			// have to take care of special case when course name is too long here
 			String name = "";
 			int i = 0;
-			// have to take care of special case when course name is too long here
 			// this looks for "x.x hp", but not goodly
 			while (i < components[1].length() - 1 && !(Character.isDigit(components[1].charAt(i)) && components[1].charAt(i + 1) == '.')) {
 				name += components[1].charAt(i);
+				if (Character.isLowerCase(components[1].charAt(i)) && Character.isUpperCase(components[1].charAt(i + 1))) {
+					name += " ";
+				}
 				i += 1;
 			}
-			name += components[1].charAt(i);
+			
+			if (name.length() == i) {
+				name += components[1].charAt(i);
+			}
 			
 			double credits;
 			int grade;
@@ -78,8 +87,8 @@ public class CourseScraper {
 			}
 			
 			return new Course(code, name, grade, credits);
-		} else { // row was not a valid course
-			return new Course("not a course", "", -1, -1.0);
+		} else { 
+			throw new IllegalArgumentException("Row was not a valid course!");
 		}
 	}
 	
