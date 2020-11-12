@@ -62,7 +62,7 @@ public class CourseScraper {
 			String name = "";
 			int i = 0;
 			// this looks for "x.x hp", but not goodly
-			while (i < components[1].length() - 1 && !(Character.isDigit(components[1].charAt(i)) && components[1].charAt(i + 1) == '.')) {
+			while (i < components[1].length() - 1 && !(Character.isDigit(components[1].charAt(i)) && components[1].charAt(i + 1) == decimal.charAt(0))) {
 				name += components[1].charAt(i);
 				if (Character.isLowerCase(components[1].charAt(i)) && Character.isUpperCase(components[1].charAt(i + 1))) {
 					name += " ";

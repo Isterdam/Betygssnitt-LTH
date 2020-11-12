@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -16,7 +15,6 @@ public class Main {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setSize(750, 500);
 			frame.setLocationRelativeTo(null);
-			frame.getContentPane().setLayout(new BorderLayout());
 			
 			JFileChooser fc = new JFileChooser(System.getProperty("user.home") + "/Downloads");
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("pdf", "pdf");
