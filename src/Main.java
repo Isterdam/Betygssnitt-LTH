@@ -30,12 +30,12 @@ public class Main {
 					selectedFile = fc.getSelectedFile();
 					courses = new CourseScraper().getCourses(selectedFile);
 					if (courses.size() == 0) {
-						JOptionPane.showMessageDialog(null, "Kunde inte läsa filen... Valde du verkligen ditt resultatintyg?");
+						JOptionPane.showMessageDialog(null, "Kunde inte läsa filen :( Valde du verkligen rätt resultatintyg?");
 						throw new Error("Wrong file!");
 					}
 					student = new Student(courses);
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(null, "Kunde inte läsa filen... Valde du verkligen ditt resultatintyg?");
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Kunde inte läsa filen :( Valde du verkligen rätt resultatintyg?");
 					throw new Error("Could not read file!", e);
 				}
 			} else {
