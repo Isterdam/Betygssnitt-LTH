@@ -9,6 +9,7 @@ import org.apache.pdfbox.text.PDFTextStripper;
 
 public class CourseScraper {
 	private String decimal;
+	private String splitter;
 	
 	public ArrayList<Course> getCourses(File file) throws IOException {
 		String content = read(file).replace("\n", "").replace("\r", "");
@@ -16,15 +17,18 @@ public class CourseScraper {
 		ArrayList<Course> courses = new ArrayList<>();
 		
 		if (rows[0].contains("Official")) { // transcript in English
-			rows[1] = rows[1].split("Note")[1]; // speciell kommandorörelse ;)
+			splitter = "Note";
 			decimal = ".";
 		} else { // transcript in Swedish
-			rows[1] = rows[1].split("Not")[1];
+			splitter = "Not";
 			decimal = ",";
 		}
 		
 		for (String row : rows) {
 			try {
+				if (row.contains(splitter)) {
+					row = row.split(splitter)[1]; // speciell kommandorörelse ;)
+				}
 				Course course = getCourse(row);
 				courses.add(course);
 			} catch (IllegalArgumentException e) {
