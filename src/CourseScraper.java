@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,7 +15,7 @@ public class CourseScraper {
 	
 	public ArrayList<Course> getCourses(File file) throws IOException {
 		String content = read(file).replace("\n", "").replace("\r", "");
-		String[] rows = content.split("[0-9]{4}.[0-9]{2}.[0-9]{2}.[0-9]"); // split at date
+		String[] rows = content.split("(?<=[\\s])(?=[12][\\D])"); // split at note
 		ArrayList<Course> courses = new ArrayList<>();
 		
 		if (rows[0].contains("Official")) { // transcript in English
@@ -50,13 +52,18 @@ public class CourseScraper {
 	}
 
 	private Course getCourse(String row) throws IllegalArgumentException {
-		Pattern coursePattern = Pattern.compile("^([A-Z]{4}[0-9]{2})");
-		Matcher matcher = coursePattern.matcher(row);
+		if (Character.isDigit(row.charAt(0))) {
+			row = row.substring(1); // remove leading digit
+		}
 		
-		if (matcher.lookingAt()) { // found valid course
+		Pattern coursePattern = Pattern.compile("^([A-Z]{4}[0-9]{2})");
+		Matcher courseMatch = coursePattern.matcher(row);
+		
+		if (courseMatch.lookingAt()) { // found valid course
+			row = row.split("[0-9]{5}")[0]; // split at random code
 			String[] components = row.split("\\s+"); // split at spaces
 			
-			if (components.length < 3 || components.length > 4) {
+			if (components.length < 4 || components.length > 5) {
 				throw new IllegalArgumentException("Row was not a valid course!");
 			}
 			
@@ -81,7 +88,7 @@ public class CourseScraper {
 			double credits;
 			int grade;
 			
-			if (components.length < 4) {
+			if (components.length == 4) {
 				String creditsString = components[1].substring(i - 1);
 				credits = parseCredits(creditsString);
 				grade = (components[2].equals("G")) ? 0 : Integer.valueOf(components[2]);
@@ -90,7 +97,10 @@ public class CourseScraper {
 				grade = (components[3].equals("G")) ? 0 : Integer.valueOf(components[3]);
 			}
 			
-			return new Course(code, name, grade, credits);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy­MM­dd");
+			LocalDate date = LocalDate.parse(components[components.length - 1], formatter);
+			
+			return new Course(date, code, name, grade, credits);
 		} else { 
 			throw new IllegalArgumentException("Row was not a valid course!");
 		}

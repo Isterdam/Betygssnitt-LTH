@@ -13,7 +13,7 @@ public class Main {
 			
 			JFrame frame = new JFrame("Betygssnitt LTH");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setSize(750, 500);
+			frame.setSize(1000, 500);
 			frame.setLocationRelativeTo(null);
 			
 			JFileChooser fc = new JFileChooser(System.getProperty("user.home") + "/Downloads");
@@ -61,18 +61,18 @@ public class Main {
 		grade.setLeftComponent(label1);
 		grade.setRightComponent(label2);
 		
-		String[][] courseData = new String[courses.size() + 2][4];
-		String[] columns = {"Kurskod", "Kursnamn", "Högskolepoäng", "Betyg"};
+		String[][] courseData = new String[courses.size() + 2][5];
+		String[] columns = {"Kurskod", "Kursnamn", "Högskolepoäng", "Betyg", "Datum"};
 		double totalCredits = 0.0;
 		for (int i = 0; i < courses.size(); i++) {
 			Course course = courses.get(i);
 			totalCredits += course.getCredits();
 			String creditsString = String.valueOf(course.getCredits());
 			String gradeString = course.getGrade() == 0 ? "G" : String.valueOf(course.getGrade());
-			courseData[i] = new String[]{course.getCode(), course.getName(), creditsString + " hp", gradeString};
+			courseData[i] = new String[]{course.getCode(), course.getName(), creditsString + " hp", gradeString, course.getDate().toString()};
 		}
-		courseData[courses.size()] = new String[]{"", "", "", ""};
-		courseData[courses.size() + 1] = new String[]{"TOTALT", "", String.valueOf(totalCredits) + " hp", ""};
+		courseData[courses.size()] = new String[]{"", "", "", "", ""};
+		courseData[courses.size() + 1] = new String[]{"TOTALT", "", String.valueOf(totalCredits) + " hp", "", ""};
 		JTable jt = new JTable(courseData, columns);
 		
 		JScrollPane scroll = new JScrollPane(jt, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
