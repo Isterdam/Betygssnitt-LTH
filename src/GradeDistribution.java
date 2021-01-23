@@ -46,7 +46,7 @@ public class GradeDistribution extends JPanel {
 		dataset.setValue(grades[2], "Betyg", "5");
 		
 		return dataset;
-    }
+	}
 	
 	private JFreeChart createChart(CategoryDataset dataset) {
 		JFreeChart barChart = ChartFactory.createBarChart("Antal betyg", 
@@ -65,5 +65,5 @@ public class GradeDistribution extends JPanel {
 		);
 		
 		return barChart;
-    }
+	}
 }

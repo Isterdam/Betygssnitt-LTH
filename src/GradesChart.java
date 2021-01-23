@@ -19,7 +19,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 
-
 public class GradesChart extends JPanel {
 	private ArrayList<Double> grades;
 	
