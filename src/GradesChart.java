@@ -40,7 +40,7 @@ public class GradesChart extends JPanel {
 	private JFreeChart createChart(XYDataset data) {
 		JFreeChart chart = ChartFactory.createXYLineChart(
 				"Betygsutveckling över tid",
-				"Tentatillfälle",
+				"Avklarad tentamen",
 				"Betygssnitt",
 				data,
 				PlotOrientation.VERTICAL,
@@ -52,29 +52,29 @@ public class GradesChart extends JPanel {
 		XYPlot plot = chart.getXYPlot();
 		
 		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesStroke(0, new BasicStroke(2.0f));
-
-        plot.setRenderer(renderer);
-        plot.setBackgroundPaint(Color.white);
-
-        plot.setRangeGridlinesVisible(true);
-        plot.setRangeGridlinePaint(Color.BLACK);
-
-        plot.setDomainGridlinesVisible(true);
-        plot.setDomainGridlinePaint(Color.BLACK);
-
-        chart.getLegend().setFrame(BlockBorder.NONE);
-
-        chart.setTitle(new TextTitle("Betygssnitt över tid",
-        		new Font("Serif", java.awt.Font.BOLD, 18)
-        		)
-        );
-        
-        ValueAxis rangeAxis = plot.getRangeAxis();
-        rangeAxis.setRange(2.9, 5.1);
-
-        return chart;
+		renderer.setSeriesPaint(0,  Color.RED);
+		renderer.setSeriesStroke(0, new BasicStroke(2.0f));
+		
+		plot.setRenderer(renderer);
+		plot.setBackgroundPaint(Color.white);
+		
+		plot.setRangeGridlinesVisible(true);
+		plot.setRangeGridlinePaint(Color.BLACK);
+		
+		plot.setDomainGridlinesVisible(true);
+		plot.setDomainGridlinePaint(Color.BLACK);
+		
+		chart.getLegend().setFrame(BlockBorder.NONE);
+		
+		chart.setTitle(new TextTitle("Betygssnitt över tid",
+				new Font("Serif", java.awt.Font.BOLD, 18)
+			)
+		);
+		
+		ValueAxis rangeAxis = plot.getRangeAxis();
+		rangeAxis.setRange(2.9, 5.1);
+		
+		return chart;
 	}
 
 	private XYDataset createDataset() {

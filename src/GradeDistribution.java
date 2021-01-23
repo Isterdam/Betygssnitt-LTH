@@ -23,12 +23,12 @@ public class GradeDistribution extends JPanel {
 	
 	private void initUI() {
 		CategoryDataset dataset = createDataset();
-
-        JFreeChart chart = createChart(dataset);
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        chartPanel.setBackground(Color.white);
-        add(chartPanel);
+		
+		JFreeChart chart = createChart(dataset);
+		ChartPanel chartPanel = new ChartPanel(chart);
+		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+		chartPanel.setBackground(Color.white);
+		add(chartPanel);
 	}
 	
 	private CategoryDataset createDataset() {
@@ -41,28 +41,29 @@ public class GradeDistribution extends JPanel {
 		}
 		
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.setValue(grades[0], "Antal", "3");
-		dataset.setValue(grades[1], "Antal", "4");
-		dataset.setValue(grades[2], "Antal", "5");
-
-        return dataset;
+		dataset.setValue(grades[0], "Betyg", "3");
+		dataset.setValue(grades[1], "Betyg", "4");
+		dataset.setValue(grades[2], "Betyg", "5");
+		
+		return dataset;
     }
 	
 	private JFreeChart createChart(CategoryDataset dataset) {
-
-        JFreeChart barChart = ChartFactory.createBarChart(
-                "Antal betyg",
-                "",
-                "Antal",
-                dataset,
-                PlotOrientation.VERTICAL,
-                false, true, false);
-        
-        barChart.setTitle(new TextTitle("Betygsfördelning",
-        		new Font("Serif", java.awt.Font.BOLD, 18)
-        		)
-        );
-
-        return barChart;
+		JFreeChart barChart = ChartFactory.createBarChart("Antal betyg", 
+				"Betyg", 
+				"Förekomst", 
+				dataset,
+				PlotOrientation.VERTICAL, 
+				false, 
+				true, 
+				false
+		);
+		
+		barChart.setTitle(new TextTitle("Betygsfördelning",
+				new Font("Serif", java.awt.Font.BOLD, 18)
+			)
+		);
+		
+		return barChart;
     }
 }
