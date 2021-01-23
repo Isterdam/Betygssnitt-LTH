@@ -7,11 +7,12 @@ public class Student {
 		this.courses = courses;
 	}
 	
-	public double getAverageGrade() {
+	public double getAverageGrade(int courseNumber) {
 		double total = 0.0;
 		double validCredits = 0.0;
 		
-		for (Course course : courses) {
+		for (int i = 0; i < courseNumber; i++) {
+			Course course = courses.get(i);
 			if (course.getGrade() > 0) {
 				total += (course.getGrade() * course.getCredits());
 				validCredits += course.getCredits();

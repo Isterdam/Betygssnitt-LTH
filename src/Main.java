@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -13,7 +14,7 @@ public class Main {
 			
 			JFrame frame = new JFrame("Betygssnitt LTH");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setSize(1000, 500);
+			frame.setSize(1500, 900);
 			frame.setLocationRelativeTo(null);
 			
 			JFileChooser fc = new JFileChooser(System.getProperty("user.home") + "/Downloads");
@@ -39,7 +40,21 @@ public class Main {
 				return;
 			}
 			
-			frame.add(getWindow(courses, student));
+			JSplitPane charts = new JSplitPane();
+			charts.setDividerSize(1);
+			charts.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+			GradesChart chart1 = new GradesChart(getGradeProgression(courses, student));
+			GradeDistribution chart2 = new GradeDistribution(courses);
+			charts.setRightComponent(chart2);
+			charts.setLeftComponent(chart1);
+			
+			JSplitPane window = new JSplitPane();
+			window.setDividerSize(2);
+			window.setOrientation(JSplitPane.VERTICAL_SPLIT);
+			window.setTopComponent(getWindow(courses, student));
+			window.setBottomComponent(charts);
+			
+			frame.add(window);
 			frame.setVisible(true);
 		});
 	}
@@ -50,7 +65,8 @@ public class Main {
 		label1.setHorizontalAlignment(JLabel.CENTER);
 		label1.setVerticalAlignment(JLabel.BOTTOM);
 		JLabel label2 = new JLabel();
-		label2.setText("<html><h1>" + student.getAverageGrade() + " / 5</h1></html>");
+		int courseNumber = courses.size();
+		label2.setText("<html><h1>" + student.getAverageGrade(courseNumber) + " / 5</h1></html>");
 		label2.setHorizontalAlignment(JLabel.CENTER);
 		label2.setVerticalAlignment(JLabel.TOP);
 		
@@ -85,5 +101,15 @@ public class Main {
 		splitPane.setRightComponent(scroll);
 		
 		return splitPane;
+	}
+	
+	private static ArrayList<Double> getGradeProgression(ArrayList<Course> courses, Student student) {
+		ArrayList<Double> grades = new ArrayList<>();
+		
+		for (int i = 0; i < courses.size() + 1; i++) {
+			grades.add(student.getAverageGrade(i));
+		}
+		
+		return grades;
 	}
 }
