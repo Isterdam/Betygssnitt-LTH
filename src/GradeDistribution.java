@@ -27,7 +27,7 @@ public class GradeDistribution extends JPanel {
 		JFreeChart chart = createChart(dataset);
 		ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-		chartPanel.setBackground(Color.white);
+		chartPanel.setBackground(this.getBackground());
 		add(chartPanel);
 	}
 	
@@ -60,7 +60,7 @@ public class GradeDistribution extends JPanel {
 		);
 		
 		barChart.setTitle(new TextTitle("Betygsfördelning",
-				new Font("Serif", java.awt.Font.BOLD, 18)
+				new Font("Serif", java.awt.Font.PLAIN, 18)
 			)
 		);
 		

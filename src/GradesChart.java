@@ -39,7 +39,7 @@ public class GradesChart extends JPanel {
 	private JFreeChart createChart(XYDataset data) {
 		JFreeChart chart = ChartFactory.createXYLineChart(
 				"Betygsutveckling över tid",
-				"Avklarad tentamen",
+				"Avklarad kurs",
 				"Betygssnitt",
 				data,
 				PlotOrientation.VERTICAL,
@@ -66,7 +66,7 @@ public class GradesChart extends JPanel {
 		chart.getLegend().setFrame(BlockBorder.NONE);
 		
 		chart.setTitle(new TextTitle("Betygssnitt över tid",
-				new Font("Serif", java.awt.Font.BOLD, 18)
+				new Font("Serif", java.awt.Font.PLAIN, 18)
 			)
 		);
 		

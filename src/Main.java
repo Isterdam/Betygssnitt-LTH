@@ -41,7 +41,6 @@ public class Main {
 			}
 			
 			JSplitPane charts = new JSplitPane();
-			charts.setDividerSize(1);
 			charts.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 			GradesChart chart1 = new GradesChart(getGradeProgression(courses, student));
 			GradeDistribution chart2 = new GradeDistribution(courses);
