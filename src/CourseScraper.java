@@ -16,13 +16,14 @@ public class CourseScraper {
 	public ArrayList<Course> getCourses(File file) throws IOException {
 		String content = read(file).replace("\n", "").replace("\r", "");
 		String[] rows = content.split("(?<=[\\s])(?=[12][\\D])"); // split at note
+		
 		ArrayList<Course> courses = new ArrayList<>();
 		
 		if (rows[0].contains("Official")) { // transcript in English
-			splitter = "Note";
+			splitter = " Note";
 			decimal = ".";
 		} else { // transcript in Swedish
-			splitter = "Not";
+			splitter = " Not";
 			decimal = ",";
 		}
 		
